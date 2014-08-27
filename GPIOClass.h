@@ -1,6 +1,4 @@
-
-#ifndef GPIO_CLASS_H
-#define GPIO_CLASS_H
+#pragma once
 
 #include <string>
 #include <iostream>
@@ -12,6 +10,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <exception>
 
 using namespace std;
 /* GPIO Class
@@ -39,5 +38,3 @@ private:
 	string gpionum;
 	
 };
-
-#endif
