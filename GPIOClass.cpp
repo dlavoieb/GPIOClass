@@ -99,7 +99,7 @@ int GPIOClass::setdir_gpio(string dir)
         //exit(1);
 		}
 		
-	if (dir.compare("in") != 0 && dir.compare("out") != 0 ) {
+	if (dir.compare("in") != 0 && dir.compare("out") != 0 && dir.compare("high") != 0 && dir.compare("low") != 0 ) {
 		//fprintf(stderr, "Invalid direction value. Should be \"in\" or \"out\". \n");
 		throw runtime_error("GPIOClass::setdir_gpio: Invalid direction value. Shoudl be \"in\" or \"out\".");
 		//exit(1);
