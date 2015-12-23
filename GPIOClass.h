@@ -26,12 +26,14 @@ public:
     int setdir_gpio(string dir);
     int setval_gpio(string val);
     int getval_gpio(string& val);
+    int set_gpio_mux(string mode);
     string get_gpionum();
 private:
     int export_gpio();
 	int unexport_gpio();
 	
 	int valuefd;
+    int muxfd;
 	int directionfd;
 	int exportfd;
 	int unexportfd;

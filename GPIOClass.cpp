@@ -5,7 +5,7 @@
 
 using namespace std;
 
-GPIOClass::GPIOClass():valuefd(-1),directionfd(-1),exportfd(-1),unexportfd(-1),gpionum("4")
+GPIOClass::GPIOClass():valuefd(-1),directionfd(-1),muxfd(-1),exportfd(-1),unexportfd(-1),gpionum("4")
 {
         //GPIO4 is default
 	try {
@@ -15,7 +15,7 @@ GPIOClass::GPIOClass():valuefd(-1),directionfd(-1),exportfd(-1),unexportfd(-1),g
 	this->export_gpio();
 }
 
-GPIOClass::GPIOClass(string gnum):valuefd(-1),directionfd(-1),exportfd(-1),unexportfd(-1),gpionum(gnum)
+GPIOClass::GPIOClass(string gnum):valuefd(-1),directionfd(-1),muxfd(-1),exportfd(-1),unexportfd(-1),gpionum(gnum)
 {
 	//Instatiate GPIOClass object for GPIO pin number "gnum"
 	try {
@@ -118,6 +118,30 @@ int GPIOClass::setdir_gpio(string dir)
 	}
 
 	    return statusVal;
+}
+
+
+int GPIOClass::set_gpio_mux(string mode)
+{
+	int statusVal = -1;
+	string mode_string = "/sys/kernel/debug/gpio_debug/gpio" + gpionum + "/current_pinmux";
+
+	mixfd = statusVal = open(mode_string.c_str(), O_WRONLY|O_SYNC); 
+	if (statusVal < 0){
+			throw runtime_error("GPIOClass::setdir_gpio: could not open SYSFS GPIO direction device");
+	}
+
+	statusVal = write(mixfd, mode.c_str(), mode.length());
+	if (statusVal < 0){
+		throw runtime_error("GPIOClass::setdir_gpio: could not write to SYSFS GPIO direction device");
+	}
+	
+	statusVal = close(mixfd);
+	if (statusVal < 0){
+		throw runtime_error("GPIOClass::setdir_gpio: could not close SYSFS GPIO direction device");
+	}
+    return statusVal;	
+
 }
 
 
